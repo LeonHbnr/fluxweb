@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --c-bg: #C8F3FF;
+  --c-light: #EBFBFF;
+  --c-surface: rgba(255, 255, 255, 0.45);
+  --c-text: #3D1405;
+  --c-muted: #6E4436;
+  --c-accent: #FF5C23;
+  --c-lime: #BEFF8B;
+  --c-lavender: #D5BAFB;
+  --c-dark: #3D1405;
+  --c-black: #0B0B0D;
+  --c-border: rgba(61, 20, 5, 0.12);
+  --radius: 2rem;
+  --radius-sm: 1rem;
+  --offset: clamp(0.75rem, 1.6vw, 1.75rem);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  selection-background-color: var(--c-accent);
+}
+
+::selection {
+  background-color: var(--c-accent);
+  color: var(--c-text);
+}
+
+/* Wembi-style masked text reveal (without permanent will-change layer bloat) */
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.word-inner {
+  display: inline-block;
+  transform: translate3d(0, 115%, 0);
+  transition: transform 0.85s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.is-inview .word-inner {
+  transform: translate3d(0, 0%, 0);
+}
+
+/* Wembi-style double-layered link slide on hover */
+.wembi-link {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  line-height: 1.2;
+  padding-bottom: 0.1em;
+}
+
+.wembi-link-inner {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.wembi-link-inner::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 0;
+  top: 115%;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.wembi-link:hover .wembi-link-inner,
+.group:hover .wembi-link-inner {
+  transform: translateY(-115%);
+}
+
+/* Wembi underline wipe */
+.wembi-underline {
+  position: relative;
+}
+
+.wembi-underline::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+  transition: transform 0.85s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.wembi-underline:hover::before {
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+/* Gooey twin bullet animation */
+.goo-bullet-pair {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 3.5rem;
+  height: 1.5rem;
+  margin-right: 1rem;
+  vertical-align: middle;
+  transform: translateY(-12%);
+}
+
+@media (min-width: 1024px) {
+  .goo-bullet-pair {
+    filter: url(#goo-meta);
+    width: 4.5rem;
+    height: 2rem;
+  }
+}
+
+.goo-bullet-dot {
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 9999px;
+  transform: scale(0);
+  transition: transform 0.95s cubic-bezier(0.5, 0, 0, 1) 0.15s;
+}
+
+@media (min-width: 1024px) {
+  .goo-bullet-dot {
+    width: 1.85rem;
+    height: 1.85rem;
+  }
+}
+
+.is-inview .goo-bullet-dot:first-child {
+  transform: scale(1) translateX(-42%);
+}
+
+.is-inview .goo-bullet-dot:nth-child(2) {
+  transform: scale(1) translateX(42%);
+}
+
+/* Floating bottom nav auto-hide on scroll down */
+.site-nav-wrapper {
+  transition: transform 0.55s cubic-bezier(0.5, 0, 0, 1);
+}
+
+html.scrolling-down .site-nav-wrapper {
+  transform: translateY(160%);
+}
+
+/* Architectural 1px dividers */
+.divide-editorial > * + * {
+  border-color: rgba(61, 20, 5, 0.12);
+}
