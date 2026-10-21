@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FluxWebLogo } from "./FluxWebLogo";
@@ -110,14 +111,28 @@ export function HeroSection() {
           ref={wordmarkRef}
           className="relative z-10 w-full will-change-transform"
         >
-          <div className="flex items-center justify-between font-mono text-[11px] sm:text-xs uppercase tracking-widest text-canvas/75 pb-4 mb-4 border-b border-canvas/15">
+          <div className="flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] sm:text-xs uppercase tracking-widest text-canvas/75 pb-4 mb-4 border-b border-canvas/15">
             <span className="inline-flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-brand-orange" />
               N°001 / SYSTEM STATUS: ACCEPTING Q4/Q1 FLAGSHIP COMMISSIONS
             </span>
-            <span className="hidden sm:inline">
-              LENIS + GSAP KINETIC ENGINE v2.6
-            </span>
+            <div className="flex items-center gap-3 ml-auto">
+              <span className="hidden md:inline text-canvas/60">
+                EDITION:
+              </span>
+              <div className="inline-flex items-center rounded-full bg-white/10 p-0.5 border border-white/15">
+                <span className="px-3 py-1 rounded-full bg-brand-orange text-brand-umber font-bold text-[10px]">
+                  Expressive
+                </span>
+                <Link
+                  href="/clean"
+                  data-cursor-label="Clean"
+                  className="px-3 py-1 rounded-full text-canvas/85 hover:text-white text-[10px] transition-colors"
+                >
+                  Clean
+                </Link>
+              </div>
+            </div>
           </div>
 
           <FluxWebLogo

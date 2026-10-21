@@ -92,6 +92,7 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     });
 
     return () => {
+      document.documentElement.classList.remove("scrolling-down", "scrolling-up");
       observers.forEach((o) => o.disconnect());
       gsap.ticker.remove(updateTicker);
       lenis.destroy();

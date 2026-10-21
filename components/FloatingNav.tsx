@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useSmoothScroll } from "./SmoothScrollProvider";
 import { FluxWebLogo } from "./FluxWebLogo";
-import { ArrowUpRight, Sparkles, X } from "lucide-react";
+import { ArrowUpRight, Minimize2, Sparkles, X } from "lucide-react";
 
 const SECTION_LINKS = [
   { id: "what", label: "What", index: "01" },
@@ -63,6 +65,8 @@ const RECAP_CARDS = [
 export function FloatingNav() {
   const { scrollTo, activeSection, openBriefModal } = useSmoothScroll();
   const [isRecapOpen, setIsRecapOpen] = useState(false);
+  const pathname = usePathname();
+  const isCleanMode = pathname?.startsWith("/clean");
 
   return (
     <>
@@ -82,13 +86,23 @@ export function FloatingNav() {
               STUDIO RECAP / CAPABILITIES DECK
             </span>
           </div>
-          <button
-            onClick={() => setIsRecapOpen(false)}
-            className="inline-flex items-center gap-2 rounded-full bg-brand-orange px-5 py-2 text-xs font-mono font-bold uppercase tracking-wider text-brand-umber active:scale-95 transition-transform"
-          >
-            <span>Close</span>
-            <X className="w-3.5 h-3.5" />
-          </button>
+          <div className="flex items-center gap-3">
+            <Link
+              href={isCleanMode ? "/" : "/clean"}
+              onClick={() => setIsRecapOpen(false)}
+              className="inline-flex items-center gap-2 rounded-full bg-surface-light/15 hover:bg-surface-light/25 border border-surface-light/20 px-4 py-2 text-xs font-mono uppercase tracking-wider text-surface-light transition-colors"
+            >
+              <Minimize2 className="w-3.5 h-3.5 text-brand-orange" />
+              <span>{isCleanMode ? "Switch to Expressive" : "Switch to Clean"}</span>
+            </Link>
+            <button
+              onClick={() => setIsRecapOpen(false)}
+              className="inline-flex items-center gap-2 rounded-full bg-brand-orange px-5 py-2 text-xs font-mono font-bold uppercase tracking-wider text-brand-umber active:scale-95 transition-transform"
+            >
+              <span>Close</span>
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
 
         <div className="my-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 py-6 overflow-y-auto">
@@ -217,11 +231,28 @@ export function FloatingNav() {
               </button>
             </li>
 
-            {/* Dark Highlighted Pill (Showcase / Work) */}
+            {/* Mode Switcher: Expressive vs Clean */}
             <li>
+              <Link
+                href={isCleanMode ? "/" : "/clean"}
+                data-cursor-label={isCleanMode ? "Expressive" : "Clean"}
+                className="h-11 px-3.5 sm:px-5 rounded-full bg-white/80 hover:bg-white border border-editorial text-brand-umber font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all hover:scale-[0.98]"
+                title={
+                  isCleanMode
+                    ? "Switch to Full Expressive Edition"
+                    : "Switch to Simpler Clean Edition"
+                }
+              >
+                <span className="w-2 h-2 rounded-full bg-brand-orange" />
+                <span>{isCleanMode ? "Expressive" : "Clean View"}</span>
+              </Link>
+            </li>
+
+            {/* Dark Highlighted Pill (Showcase / Work) */}
+            <li className="hidden sm:block">
               <button
                 onClick={() => scrollTo('[data-anchor="where"]')}
-                className="h-11 px-4 sm:px-6 rounded-full bg-brand-umber text-brand-orange font-mono text-xs uppercase tracking-wider flex items-center gap-1.5 hover:scale-[0.97] active:scale-[0.93] transition-transform"
+                className="h-11 px-4 sm:px-5 rounded-full bg-brand-umber text-brand-orange font-mono text-xs uppercase tracking-wider flex items-center gap-1.5 hover:scale-[0.97] active:scale-[0.93] transition-transform"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Work</span>
